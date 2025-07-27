@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebMap Geoserver e Leafleat</title>
+    <link rel="shortcut icon" type="image/png" href="icon.png">
+    <link rel="stylesheet" href="./index.css">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    
+    <!-- Geocoder CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+    
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <!-- Geocoder JS -->
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
+    <!-- Leaflet MiniMap -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-minimap/dist/Control.MiniMap.min.css" />
+    <script src="https://unpkg.com/leaflet-minimap/dist/Control.MiniMap.min.js"></script>
+
+    <!-- Leaflet Draw -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw-src.css" />
+
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h1 class="header-title">
+                <i class="fas fa-globe-americas"></i>
+                WebMap Geoserver e Leafleat
+            </h1>
+      <div class="header-actions">
+    <button class="header-btn" id="zoomInBtn" title="Zoom In">
+        <i class="fa-solid fa-magnifying-glass-plus"></i>
+    </button>
+    <button class="header-btn" id="zoomOutBtn" title="Zoom Out">
+        <i class="fa-solid fa-magnifying-glass-minus"></i>
+    </button>
+  <button class="header-btn" id="minimapTool" title="Mini mapa">
+        <i class="fa-solid fa-globe"></i>
+    </button>
+    <button class="header-btn" id="scaleTool" title="Escala">
+        <i class="fas fa-ruler-combined"></i>
+    </button>
+    
+</div>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-content">
+            <!-- Seção de Camadas Base -->
+            <div class="sidebar-section">
+                <div class="section-header">
+                    <i class="fas fa-layer-group"></i>
+                    <h3>Camadas Base</h3>
+                    <button class="section-toggle" data-target="basemaps">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+                <div class="section-content" id="basemaps">
+                    <div class="layer-item">
+                        <input type="radio" name="basemap" id="osm" value="osm" checked>
+                        <label for="osm">
+                            <i class="fas fa-map"></i>
+                            OpenStreetMap
+                        </label>
+                    </div>
+                    <div class="layer-item">
+                        <input type="radio" name="basemap" id="google-hybrid" value="google-hybrid">
+                        <label for="google-hybrid">
+                            <i class="fas fa-satellite"></i>
+                            Google Hybrid
+                        </label>
+                    </div>
+                    <div class="layer-item">
+                        <input type="radio" name="basemap" id="google-streets" value="google-streets">
+                        <label for="google-streets">
+                            <i class="fas fa-road"></i>
+                            Google Streets
+                        </label>
+                    </div>
+                    <div class="layer-item">
+                        <input type="radio" name="basemap" id="google-satellite" value="google-satellite">
+                        <label for="google-satellite">
+                            <i class="fas fa-satellite-dish"></i>
+                            Google Satellite
+                        </label>
+                    </div>
+                    <div class="layer-item">
+                        <input type="radio" name="basemap" id="google-terrain" value="google-terrain">
+                        <label for="google-terrain">
+                            <i class="fas fa-mountain"></i>
+                            Google Terrain
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção de Overlays -->
+            <div class="sidebar-section">
+                <div class="section-header">
+                    <i class="fas fa-database"></i>
+                    <h3>Camadas Temáticas</h3>
+                    <button class="section-toggle" data-target="overlays">
+                        <i class="fas fa-chevron-down"></i>
+                    </button> </div>
+                <div class="section-content" id="overlays">
+                    <div class="overlay-item">
+                        <div class="overlay-header">
+                            <div class="overlay-control">
+                                <input type="checkbox" id="municipios" value="municipios">
+                                <label for="municipios">
+                                    <i class="fas fa-city"></i>
+                                    Municípios
+                                </label> </div>
+                            <div class="overlay-actions">
+                                <button class="download-btn" data-layer="municipio" title="Download">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                                <button class="opacity-btn" data-target="municipios-opacity" title="Opacidade">
+                                    <i class="fas fa-adjust"></i>
+                                </button> </div>
+                        </div>
+                        <div class="opacity-control" id="municipios-opacity">
+                            <label>Opacidade:</label>
+                            <input type="range" min="0" max="1" step="0.1" value="1" class="opacity-slider" data-layer="municipios">
+                            <span class="opacity-value">100%</span> </div>
+                    </div>
+
+                    <div class="overlay-item">
+                        <div class="overlay-header">
+                            <div class="overlay-control">
+                                <input type="checkbox" id="bacias" value="bacias">
+                                <label for="bacias">
+                                    <i class="fas fa-water"></i>
+                                    Bacias Hidrográficas
+                                </label>
+                            </div>
+                            <div class="overlay-actions">
+                                <button class="download-btn" data-layer="bacia" title="Download">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                                <button class="opacity-btn" data-target="bacias-opacity" title="Opacidade">
+                                    <i class="fas fa-adjust"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="opacity-control" id="bacias-opacity">
+                            <label>Opacidade:</label>
+                            <input type="range" min="0" max="1" step="0.1" value="1" class="opacity-slider" data-layer="bacias">
+                            <span class="opacity-value">100%</span>
+                        </div>
+                    </div>
+
+                    <div class="overlay-item">
+                        <div class="overlay-header">
+                            <div class="overlay-control">
+                                <input type="checkbox" id="uf" value="uf">
+                                <label for="uf">
+                                    <i class="fas fa-flag"></i>
+                                    Unidades Federativas
+                                </label>
+                            </div>
+                            <div class="overlay-actions">
+                                <button class="download-btn" data-layer="uf" title="Download">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                                <button class="opacity-btn" data-target="uf-opacity" title="Opacidade">
+                                    <i class="fas fa-adjust"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="opacity-control" id="uf-opacity">
+                            <label>Opacidade:</label>
+                            <input type="range" min="0" max="1" step="0.1" value="1" class="opacity-slider" data-layer="uf">
+                            <span class="opacity-value">100%</span>
+                        </div>
+                    </div>
+
+
+                    <div class="overlay-item">
+                        <div class="overlay-header">
+                            <div class="overlay-control">
+                                <input type="checkbox" id="biomas" value="biomas">
+                                <label for="biomas">
+                                    <i class="fa-solid fa-tree"></i>
+                                    Biomas Brasileiros
+                                </label>
+                            </div>
+                            <div class="overlay-actions">
+                                <button class="download-btn" data-layer="biomas" title="Download">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                                <button class="opacity-btn" data-target="biomas-opacity" title="Opacidade">
+                                    <i class="fas fa-adjust"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="opacity-control" id="biomas-opacity">
+                            <label>Opacidade:</label>
+                            <input type="range" min="0" max="1" step="0.1" value="1" class="opacity-slider" data-layer="biomas">
+                            <span class="opacity-value">100%</span>
+                        </div>
+         	</div>
+                </div>
+            </div>
+
+            <!-- Seção de Ferramentas -->
+            <div class="sidebar-section">
+                <div class="section-header">
+                    <i class="fas fa-tools"></i>
+                    <h3>Ferramentas</h3>
+                    <button class="section-toggle" data-target="tools">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+                <div class="section-content" id="tools">
+                    <div class="tool-item">
+                        <button class="tool-btn" id="searchTool">
+                            <i class="fas fa-search"></i>
+                            Buscar Local
+                        </button>
+                    </div>
+                    <div class="tool-item">
+                        <button class="tool-btn" id="measureTool">
+                            <i class="fas fa-ruler"></i>
+                            Medir Distância
+                        </button>
+                    </div>
+                    <div class="tool-item">
+                        <button class="tool-btn" id="fullscreenTool">
+                            <i class="fas fa-expand"></i>
+                            Tela Cheia
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Área do Mapa -->
+    <main class="main-content">
+        <div id="map"></div>
+
+    <!-- Legenda flutuante -->
+    <div id="legendBox" class="map-legend" style="display: none;">
+    <img src="http://146.235.46.117:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=aula:biomas"
+         alt="Legenda Biomas">
+    </div>
+
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="status-item">
+                <i class="fas fa-wifi"></i>
+                <span id="connectionStatus">Conectado</span>
+            </div>
+            <div class="status-item">
+                <i class="fas fa-mouse-pointer"></i>
+                <span id="coordinates">Lat: 0, Lng: 0</span>
+            </div>
+            <div class="status-item">
+                <i class="fas fa-search-plus"></i>
+                <span id="zoomLevel">Zoom: 4</span>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-info">
+                <span>WebSIG criado por Daniel José de Andrade</span>
+                <span>&copy; 2025 - Todos os direitos reservados</span>
+            </div>
+            <div class="footer-tech">
+                <span>Powered by Leaflet & GeoServer</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <span>Carregando...</span>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="./index.js" async defer></script>
+</body>
+</html>
+
