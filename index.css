@@ -269,6 +269,52 @@ body {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
+/* Controle de Filtro CQL no Mapa */
+.cql-filter-map-control {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    min-width: 300px;
+    display: none; /* Inicialmente oculto */
+}
+
+.cql-filter-map-control.active {
+    display: block;
+}
+
+.cql-filter-map-control .cql-filter-input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: var(--surface-color);
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    outline: none;
+    transition: var(--transition-fast);
+}
+
+.cql-filter-map-control .cql-filter-input:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+}
+
+.cql-filter-map-control .cql-filter-input::placeholder {
+    color: var(--text-secondary);
+}
+
+/* Controle de Filtro CQL no Sidebar (removido) */
+.cql-filter-control {
+    display: none;
+}
+
 /* Controle de Opacidade */
 .opacity-control {
     padding: 0.5rem 1.5rem;
@@ -880,6 +926,10 @@ input:focus-visible {
     max-width: 100%;
     height: auto;
 }
+
+
+
+
 
 
 
