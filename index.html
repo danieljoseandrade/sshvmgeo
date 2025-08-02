@@ -135,6 +135,7 @@
                                     <i class="fas fa-city"></i>
                                     Municípios
                                 </label> </div>
+
                             <div class="overlay-actions">
                                 <button class="download-btn" data-layer="municipio" title="Download">
                                     <i class="fas fa-download"></i>
@@ -264,6 +265,16 @@
     <main class="main-content">
         <div id="map"></div>
 
+    <!-- Filtro CQL para Municípios -->
+<div class="cql-filter-map-control">
+    <div style="display: flex; gap: 0.5rem;">
+        <input type="text" class="cql-filter-input" id="municipios-cql-filter" placeholder="Filtro CQL (ex: nome='São Paulo')" style="flex: 1;">
+        <button id="clearCqlBtn" title="Limpar Filtro" style="padding: 6px 10px; background-color: #eee; border: 1px solid #ccc; border-radius: 4px; cursor: pointer;">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+</div>
+
     <!-- Legenda flutuante -->
     <div id="legendBox" class="map-legend" style="display: none;">
     <img src="http://146.235.46.117:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=aula:biomas"
@@ -314,4 +325,6 @@
     <script src="./index.js" async defer></script>
 </body>
 </html>
+
+
 
