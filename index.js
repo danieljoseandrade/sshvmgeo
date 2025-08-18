@@ -128,7 +128,7 @@ document.getElementById('scaleTool').addEventListener('click', function () {
 
     
     // Camadas WMS
-    const municipioLayer = L.tileLayer.wms("http://websig.duckdns.org:8080/geoserver/aula/wms", {
+    const municipioLayer = L.tileLayer.wms("http://146.235.46.159:8080/geoserver/aula/wms", {
         layers: "aula:municipio",
         transparent: true,
         format: "image/png",
@@ -138,7 +138,7 @@ document.getElementById('scaleTool').addEventListener('click', function () {
         srs: 'EPSG:4326'
     });
 
-    const baciaLayer = L.tileLayer.wms("http://websig.duckdns.org:8080/geoserver/aula/wms", {
+    const baciaLayer = L.tileLayer.wms("http://146.235.46.159:8080/geoserver/aula/wms", {
         layers: "aula:bacia",
         transparent: true,
         format: "image/png",
@@ -148,7 +148,7 @@ document.getElementById('scaleTool').addEventListener('click', function () {
         srs: 'EPSG:4326'
     });
 
-    const ufLayer = L.tileLayer.wms("http://websig.duckdns.org:8080/geoserver/aula/wms", {
+    const ufLayer = L.tileLayer.wms("http://146.235.46.159:8080/geoserver/aula/wms", {
         layers: "aula:uf",
         transparent: true,
         format: "image/png",
@@ -158,7 +158,7 @@ document.getElementById('scaleTool').addEventListener('click', function () {
         srs: 'EPSG:4326'
     });
 
-    const biomasLayer = L.tileLayer.wms("http://websig.duckdns.org:8080/geoserver/aula/wms", {
+    const biomasLayer = L.tileLayer.wms("http://146.235.46.159:8080/geoserver/aula/wms", {
         layers: "aula:biomas",
         transparent: true,
         format: "image/png",
@@ -551,10 +551,10 @@ function toggleOverlay(overlayId, enabled) {
 
 function downloadLayer(layerName) {
     const urls = {
-        'municipio': 'http://websig.duckdns.org:8080/geoserver/aula/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aula:municipio&outputFormat=SHAPE-ZIP',
-        'bacia': 'http://websig.duckdns.org:8080/geoserver/aula/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aula:bacia&outputFormat=SHAPE-ZIP',
-        'uf': 'http://websig.duckdns.org:8080/geoserver/aula/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aula:uf&outputFormat=SHAPE-ZIP',
-        'biomas':'http://websig.duckdns.org:8080/geoserver/aula/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aula:biomas&outputFormat=SHAPE-ZIP'
+        'municipio': 'http://146.235.46.159:8080/geoserver/aula/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aula:municipio&outputFormat=SHAPE-ZIP',
+        'bacia': 'http://146.235.46.159:8080/geoserver/aula/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aula:bacia&outputFormat=SHAPE-ZIP',
+        'uf': 'http://146.235.46.159:8080/geoserver/aula/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aula:uf&outputFormat=SHAPE-ZIP',
+        'biomas':'http://146.235.46.159:8080/geoserver/aula/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aula:biomas&outputFormat=SHAPE-ZIP'
 
     };
 
