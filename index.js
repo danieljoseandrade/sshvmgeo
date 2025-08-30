@@ -488,7 +488,7 @@ function toggleOverlay(overlayId, enabled) {
 
 // Mostrar ou esconder legenda dos biomas
     if (overlayId === 'biomas') {
-    const legendBox = document.getElementById('legendBox');
+    const legendBox = document.getElementById('legend-box');
     if (legendBox) legendBox.style.display = enabled ? 'block' : 'none';
     }
 
