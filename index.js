@@ -126,7 +126,7 @@ document.getElementById('scaleTool').addEventListener('click', function () {
     osmLayer.addTo(map);
 
     // Camadas WMS
-    const municipioLayer = L.tileLayer.wms("https://146.235.46.159/geoserver/aula/wms", {
+    const municipioLayer = L.tileLayer.wms("https://websigeo.ddns.net/geoserver/aula/wms", {
         layers: "aula:municipio",
         transparent: true,
         format: "image/png",
@@ -134,7 +134,7 @@ document.getElementById('scaleTool').addEventListener('click', function () {
         opacity: 1
     });
 
-    const baciaLayer = L.tileLayer.wms("https://146.235.46.159/geoserver/aula/wms", {
+    const baciaLayer = L.tileLayer.wms("https://websigeo.ddns.net/geoserver/aula/wms", {
         layers: "aula:bacia",
         transparent: true,
         format: "image/png",
@@ -142,7 +142,7 @@ document.getElementById('scaleTool').addEventListener('click', function () {
         opacity: 1
     });
 
-    const ufLayer = L.tileLayer.wms("https://146.235.46.159/geoserver/aula/wms", {
+    const ufLayer = L.tileLayer.wms("https://websigeo.ddns.net/geoserver/aula/wms", {
         layers: "aula:uf",
         transparent: true,
         format: "image/png",
@@ -150,7 +150,7 @@ document.getElementById('scaleTool').addEventListener('click', function () {
         opacity: 1
     });
 
-    const biomasLayer = L.tileLayer.wms("https://146.235.46.159/geoserver/aula/wms", {
+    const biomasLayer = L.tileLayer.wms("https://websigeo.ddns.net/geoserver/aula/wms", {
         layers: "aula:biomas",
         transparent: true,
         format: "image/png",
@@ -508,10 +508,10 @@ function toggleOverlay(overlayId, enabled) {
 
 function downloadLayer(layerName) {
     const urls = {
-        'municipio': 'https://146.235.46.159/geoserver/aula/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aula:municipio&outputFormat=SHAPE-ZIP',
-        'bacia': 'https://146.235.46.159/geoserver/aula/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aula:bacia&outputFormat=SHAPE-ZIP',
-        'uf': 'https://146.235.46.159/geoserver/aula/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aula:uf&outputFormat=SHAPE-ZIP',
-        'biomas':'https://146.235.46.159/geoserver/aula/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aula:biomas&outputFormat=SHAPE-ZIP'
+        'municipio': 'https://websigeo.ddns.net/geoserver/aula/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aula:municipio&outputFormat=SHAPE-ZIP',
+        'bacia': 'https://websigeo.ddns.net/geoserver/aula/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aula:bacia&outputFormat=SHAPE-ZIP',
+        'uf': 'https://websigeo.ddns.net/geoserver/aula/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aula:uf&outputFormat=SHAPE-ZIP',
+        'biomas':'https://websigeo.ddns.net/geoserver/aula/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aula:biomas&outputFormat=SHAPE-ZIP'
 
     };
 
