@@ -269,52 +269,6 @@ body {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* Controle de Filtro CQL no Mapa */
-.cql-filter-map-control {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    z-index: 1000;
-    background-color: rgba(255, 255, 255, 0.95);
-    border-radius: 8px;
-    padding: 12px;
-    box-shadow: var(--shadow-lg);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
-    min-width: 300px;
-    display: none; /* Inicialmente oculto */
-}
-
-.cql-filter-map-control.active {
-    display: block;
-}
-
-.cql-filter-map-control .cql-filter-input {
-    width: 100%;
-    padding: 8px 12px;
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    background-color: var(--surface-color);
-    color: var(--text-primary);
-    font-size: 0.875rem;
-    outline: none;
-    transition: var(--transition-fast);
-}
-
-.cql-filter-map-control .cql-filter-input:focus {
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
-}
-
-.cql-filter-map-control .cql-filter-input::placeholder {
-    color: var(--text-secondary);
-}
-
-/* Controle de Filtro CQL no Sidebar (removido) */
-.cql-filter-control {
-    display: none;
-}
-
 /* Controle de Opacidade */
 .opacity-control {
     padding: 0.5rem 1.5rem;
@@ -652,6 +606,15 @@ body {
     }
 }
 
+/* Quando o menu lateral estiver aberto no mobile, joga a legenda atrás */
+@media (max-width: 768px) {
+    .sidebar.open ~ .main-content .map-legend {
+         max-width:75%;
+	 z-index: 500; /* menor que o z-index do sidebar */
+    }   
+}
+
+
 /* CORREÇÃO PRINCIPAL PARA DISPOSITIVOS MÓVEIS */
 @media (max-width: 480px) {
     :root {
@@ -769,6 +732,14 @@ body {
         gap: 1rem;
     }
 }
+
+/* Quando o menu lateral estiver aberto no mobile, joga a legenda atrás */
+/*@media (max-width: 480px) {
+    .sidebar.open ~ .main-content .map-legend {
+        z-index: 500; /* menor que o z-index do sidebar */
+    }
+}
+
 
 /* Responsividade para telas até 320px */
 @media (max-width: 320px) {
@@ -912,20 +883,36 @@ input:focus-visible {
 .map-legend {
     position: absolute;
     bottom: 90px; /* acima da escala e do status */
-    left: 10px;
+    left: 7px;
     background: rgba(255, 255, 255, 0.95);
     border: 3px solid #ccc;
     border-radius: 5%;
     padding: 8px;
     z-index: 1002;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    max-width: 200px;
+    max-width: 140px;
 }
 
 .map-legend img {
     max-width: 100%;
     height: auto;
 }
+
+@media (max-width: 768px) {
+  .map-legend {
+    max-width: 100px;   /* menor largura */
+    padding: 5px;       /* menos espaçamento */
+    font-size: 0.75rem; /* reduz fonte se tiver texto */
+  }
+}
+
+@media (max-width: 480px) {
+  .map-legend {
+    max-width: 80px;   /* ainda menor para telas muito pequenas */
+    padding: 4px;
+  }
+}
+
 
 
 
