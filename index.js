@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeSidebar();
     initializeControls();
     initializeEventListeners();
-    initializeCqlFilters(); // Inicializar filtros CQL
     showToast('WebMap GIS carregado com sucesso!', 'success');
 });
 
@@ -126,46 +125,37 @@ document.getElementById('scaleTool').addEventListener('click', function () {
     // Adicionar camada base padrão
     osmLayer.addTo(map);
 
-    
     // Camadas WMS
-    const municipioLayer = L.tileLayer.wms("http://146.235.46.159:8080/geoserver/aula/wms", {
+    const municipioLayer = L.tileLayer.wms("https://146.235.46.159/geoserver/aula/wms", {
         layers: "aula:municipio",
         transparent: true,
         format: "image/png",
-        opacity: 1,
-        version: '1.1.0',
-        zIndex: 1011,
-        srs: 'EPSG:4326'
+	    zIndex: 1011,
+        opacity: 1
     });
 
-    const baciaLayer = L.tileLayer.wms("http://146.235.46.159:8080/geoserver/aula/wms", {
+    const baciaLayer = L.tileLayer.wms("https://146.235.46.159/geoserver/aula/wms", {
         layers: "aula:bacia",
         transparent: true,
         format: "image/png",
-        opacity: 1,
-        version: '1.1.0',
-        zIndex: 1012,
-        srs: 'EPSG:4326'
+	    zIndex: 1012,
+        opacity: 1
     });
 
-    const ufLayer = L.tileLayer.wms("http://146.235.46.159:8080/geoserver/aula/wms", {
+    const ufLayer = L.tileLayer.wms("https://146.235.46.159/geoserver/aula/wms", {
         layers: "aula:uf",
         transparent: true,
         format: "image/png",
-        opacity: 1,
-        version: '1.1.0',
-        zIndex: 1013,
-        srs: 'EPSG:4326'
+	    zIndex: 1013,
+        opacity: 1
     });
 
-    const biomasLayer = L.tileLayer.wms("http://146.235.46.159:8080/geoserver/aula/wms", {
+    const biomasLayer = L.tileLayer.wms("https://146.235.46.159/geoserver/aula/wms", {
         layers: "aula:biomas",
         transparent: true,
         format: "image/png",
-        opacity: 1,
-        version: '1.1.0',
-        zIndex: 1010,
-        srs: 'EPSG:4326'
+	    zIndex:1010,
+        opacity: 1
     });
 
     // Armazenar overlays
@@ -492,48 +482,14 @@ function changeBasemap(basemapId) {
     }
 }
 
-//function toggleOverlay(overlayId, enabled) {
-//    const layer = overlayMaps[overlayId];
-//    if (!layer) return;
-
-//    if (enabled) {
-//        showLoading();
-//        layer.addTo(map);
-//        showToast(`Camada ${getOverlayName(overlayId)} ativada`, 'success');
-//        hideLoading();
-//    } else {
-//        map.removeLayer(layer);
-//        showToast(`Camada ${getOverlayName(overlayId)} desativada`, 'success');
-//    }
-//}
-
-
 function toggleOverlay(overlayId, enabled) {
     const layer = overlayMaps[overlayId];
     if (!layer) return;
 
-    // Mostrar ou esconder legenda dos biomas
+// Mostrar ou esconder legenda dos biomas
     if (overlayId === 'biomas') {
-        const legendBox = document.getElementById('legendBox');
-        if (legendBox) legendBox.style.display = enabled ? 'block' : 'none';
-    }
-
-    // Mostrar ou esconder filtro CQL para municípios
-    if (overlayId === 'municipios') {
-        const cqlFilterControl = document.querySelector('.cql-filter-map-control');
-        if (cqlFilterControl) {
-            if (enabled) {
-                cqlFilterControl.classList.add('active');
-            } else {
-                cqlFilterControl.classList.remove('active');
-                // Limpar o filtro quando a camada for desativada
-                const filterInput = document.getElementById('municipios-cql-filter');
-                if (filterInput) {
-                    filterInput.value = '';
-                    applyCqlFilter('municipios', '');
-                }
-            }
-        }
+    const legendBox = document.getElementById('legendBox');
+    if (legendBox) legendBox.style.display = enabled ? 'block' : 'none';
     }
 
     if (enabled) {
@@ -541,6 +497,7 @@ function toggleOverlay(overlayId, enabled) {
         layer.addTo(map);
         showToast(`Camada ${getOverlayName(overlayId)} ativada`, 'success');
         hideLoading();
+
     } else {
         map.removeLayer(layer);
         showToast(`Camada ${getOverlayName(overlayId)} desativada`, 'success');
@@ -551,10 +508,10 @@ function toggleOverlay(overlayId, enabled) {
 
 function downloadLayer(layerName) {
     const urls = {
-        'municipio': 'http://146.235.46.159:8080/geoserver/aula/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aula:municipio&outputFormat=SHAPE-ZIP',
-        'bacia': 'http://146.235.46.159:8080/geoserver/aula/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aula:bacia&outputFormat=SHAPE-ZIP',
-        'uf': 'http://146.235.46.159:8080/geoserver/aula/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aula:uf&outputFormat=SHAPE-ZIP',
-        'biomas':'http://146.235.46.159:8080/geoserver/aula/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aula:biomas&outputFormat=SHAPE-ZIP'
+        'municipio': 'https://146.235.46.159/geoserver/aula/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aula:municipio&outputFormat=SHAPE-ZIP',
+        'bacia': 'https://146.235.46.159/geoserver/aula/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aula:bacia&outputFormat=SHAPE-ZIP',
+        'uf': 'https://146.235.46.159/geoserver/aula/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aula:uf&outputFormat=SHAPE-ZIP',
+        'biomas':'https://146.235.46.159/geoserver/aula/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aula:biomas&outputFormat=SHAPE-ZIP'
 
     };
 
@@ -710,71 +667,57 @@ window.addEventListener('offline', updateConnectionStatus);
 
 // Inicializar status de conexão
 updateConnectionStatus();
+let inactivityTimeout; // Armazena o timer de inatividade
+const INACTIVITY_LIMIT = 5 * 60 * 1000; // 5 minutos (modificável)
 
+// Reinicializa a interface e desativa camadas ativas
+function resetWebSIG() {
 
-// Função para aplicar filtro CQL
-function applyCqlFilter(layerName, cqlFilter) {
-    const layer = overlayMaps[layerName];
-    if (layer) {
-        if (cqlFilter && cqlFilter.trim() !== '') {
-            layer.setParams({ cql_filter: cqlFilter });
-            showToast(`Filtro CQL '${cqlFilter}' aplicado à camada ${getOverlayName(layerName)}`, 'info');
-        } else {
-            // Remove o parâmetro cql_filter completamente
-            const params = { ...layer.wmsParams };
-            delete params.cql_filter;
-            layer.setParams(params);
-
-            // Força a recarga da camada no mapa (remove e adiciona novamente)
-            if (map.hasLayer(layer)) {
-                map.removeLayer(layer);
-                map.addLayer(layer);
-            }
-
-            showToast(`Filtro CQL removido da camada ${getOverlayName(layerName)}`, 'info');
+    // Desmarcar todas as camadas temáticas
+    document.querySelectorAll('#overlays input[type="checkbox"]').forEach(checkbox => {
+        if (checkbox.checked) {
+            checkbox.checked = false;
+            toggleOverlay(checkbox.id, false);
         }
-    }
+    });
+
+    // Resetar sliders de opacidade para 100%
+    document.querySelectorAll('.opacity-slider').forEach(slider => {
+        slider.value = 1;
+        const event = new Event('input');
+        slider.dispatchEvent(event);
+    });
+
+    // Fechar painéis abertos
+    document.querySelectorAll('.opacity-control').forEach(ctrl => ctrl.classList.remove('active'));
+
+    // Resetar toast e mostrar reinicialização
+    showToast('Sistema reinicializado por inatividade.', 'info');
 }
 
-
-// Event listener para o input do filtro CQL
-function initializeCqlFilters() {
-    const municipiosCqlInput = document.getElementById('municipios-cql-filter');
-    if (municipiosCqlInput) {
-        municipiosCqlInput.addEventListener('keyup', function(event) {
-            // Aplicar filtro quando pressionar Enter ou após uma pausa na digitação
-            if (event.key === 'Enter') {
-                const cqlFilter = this.value.trim();
-                applyCqlFilter('municipios', cqlFilter);
-            }
-        });
-        
-        // Aplicar filtro com delay para não sobrecarregar o servidor
-        let timeout;
-        municipiosCqlInput.addEventListener('input', function() {
-            clearTimeout(timeout);
-            timeout = setTimeout(() => {
-                const cqlFilter = this.value.trim();
-                applyCqlFilter('municipios', cqlFilter);
-            }, 1000); // Aguarda 1 segundo após parar de digitar
-        });
-    }
+// Reiniciar temporizador de inatividade
+function resetInactivityTimer() {
+    clearTimeout(inactivityTimeout);
+    inactivityTimeout = setTimeout(resetWebSIG, INACTIVITY_LIMIT);
 }
 
-//Comportamento do botão
-document.addEventListener('DOMContentLoaded', () => {
-    const clearBtn = document.getElementById('clearCqlBtn');
-    if (clearBtn) {
-        clearBtn.addEventListener('click', () => {
-            const input = document.getElementById('municipios-cql-filter');
-            if (input) {
-                input.value = '';
-                applyCqlFilter('municipios', '');
-            }
-        });
-    }
+// Escutar eventos de atividade do usuário
+['mousemove', 'keydown', 'touchstart', 'click'].forEach(evt => {
+    document.addEventListener(evt, resetInactivityTimer, true);
 });
 
+// Iniciar temporizador ao carregar
+resetInactivityTimer();
+let hiddenStart = null;
+const MAX_HIDDEN_TIME = 3 * 60 * 1000; // 3 minutos fora de foco
 
-
-
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+        hiddenStart = Date.now();
+    } else {
+        if (hiddenStart && (Date.now() - hiddenStart > MAX_HIDDEN_TIME)) {
+            resetWebSIG();
+        }
+        hiddenStart = null;
+    }
+});
